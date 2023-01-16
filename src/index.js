@@ -38,38 +38,28 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-  let arrayLetters = [];
   let itemPosition = 0;
   let resultArray = [];
   let result = '';
 
   while(itemPosition < expr.length) {
-    arrayLetters.push(expr.substr(itemPosition, 10));
+    decodeElement(expr.substr(itemPosition, 10));
     itemPosition += 10;
   }
 
-  arrayLetters.forEach(element => decodeElement(element));
-
   function decodeElement(element) {
-    let position = 0;
-    let wordArray = [];
     
     if(element === '**********') {
       resultArray.push(' ');
     } else {
+      let position = 0;
+      let lett = '';
       while(position < element.length) {
-        wordArray.push(element.substr(position, 2));
+
+        element.substr(position, 2) === '10' ? lett += '.' : element.substr(position, 2) === '11' ? lett += '-' : lett += '';
+        
         position += 2;
       }
-      let lett = '';
-      wordArray.forEach(letter => {
-        if(letter === '10') {
-          lett += '.'
-        }
-        if(letter === '11') {
-          lett += '-'
-        }
-      })
       resultArray.push(lett);
     }
   }
